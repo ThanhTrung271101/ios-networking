@@ -9,32 +9,20 @@ import Foundation
 
 class CoinsViewModel: ObservableObject {
     
-    @Published var coin = ""
-    @Published var price = ""
+    @Published var coins = [Coin]()
+    
+    private let service = CoinDataService()
     
     init() {
-        fetchPrice(coin: "bitcoin")
+        fetchCoin()
     }
     
-    func fetchPrice(coin: String) {
-        let urlString = "https://api.coingecko.com/api/v3/simple/price?ids=\(coin)&vs_currencies=usd"
-        
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, respone, error in
-            print("DEBUG: Did receive data \(data).")
-            guard let data = data else { return }
-            guard let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return }
-            guard let value = jsonObject[coin] as? [String: Double] else {
-                print("DEBUG: Failed to parse value...")
-                return
-            }
-            guard let price = value["usd"] else { return }
-            
+    func fetchCoin() {
+        service.fetchCoin { coins in
             DispatchQueue.main.async {
-                self.coin = coin.capitalized
-                self.price = "$\(price)"
+                self.coins = coins
             }
-        }.resume()
+        }
     }
+    
 }
