@@ -13,7 +13,6 @@ struct Coin: Codable, Identifiable {
     let name: String
     let currentPrice: Double
     let marketCapRank: Int
-    
     enum CodingKeys: String, CodingKey {
         case id, symbol, name
         case currentPrice = "current_price"
