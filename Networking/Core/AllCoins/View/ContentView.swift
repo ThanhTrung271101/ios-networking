@@ -18,7 +18,6 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(coin.name)
                             .fontWeight(.semibold)
-                        
                         Text(coin.symbol.uppercased())
                     }
                 }

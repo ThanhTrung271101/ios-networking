@@ -13,7 +13,6 @@ enum CoinAPIError: Error {
     case requestFailed(description: String)
     case invalidStatusCode(statusCode: Int)
     case unknownError(error: Error)
-    
     var customDescription: String {
         switch self {
         case .invalidData: return "Invalid data"
